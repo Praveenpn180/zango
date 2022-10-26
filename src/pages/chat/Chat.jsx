@@ -1,5 +1,5 @@
 import React from 'react'
-import ChatMessages from '../../components/chat/ChatMessages'
+import ChatHeader from '../../components/chat/ChatHeader'
 import ChatSidebar from '../../components/chat/ChatSidebar'
 
 export default function Chat() {
@@ -7,7 +7,7 @@ export default function Chat() {
     <div className="chat">
         <div className="chatContainer">
             <ChatSidebar/>
-            <ChatMessages/>
+            <ChatHeader/>
         </div>
     </div>
   )
