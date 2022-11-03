@@ -3,8 +3,9 @@ import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { login , reset } from '../../redux/userSlice'
+import { login , reset } from '../../redux/slices/userSlice/userSlice'
 import Spinner from '../../components/Spinner/Spinner'
+import './auth.scss'
  function Login() {
 
 
@@ -16,6 +17,7 @@ import Spinner from '../../components/Spinner/Spinner'
   const { user, isError, isSuccess, isLoading,  message } = useSelector((state) => state.user)
 
   useEffect(() => {
+    console.log(user, isError, isSuccess, isLoading,  message );
     if (isError) {
       toast.error(message)
     }
@@ -23,7 +25,7 @@ import Spinner from '../../components/Spinner/Spinner'
       navigate('/')
     }
     dispatch(reset())
-  }, [isError, user, message, isSuccess, navigate, dispatch])
+  }, [isError, user, message, isSuccess,isLoading, navigate, dispatch])
 
   const onSubmit = (data) => {
     dispatch(login(data))
@@ -50,7 +52,7 @@ import Spinner from '../../components/Spinner/Spinner'
               }
             })} />
             {errors.email && <p className="errorMessage">{errors.email?.message}</p>}
-            <input type="text" placeholder='Password' name='password'{...register('password', { required: 'Please enter password', minLength: { value: 5, message: 'Password must be 8 characters' } })} />
+            <input type="password" placeholder='Password' name='password'{...register('password', { required: 'Please enter password', minLength: { value: 5, message: 'Password must be 8 characters' } })} />
             {errors.password && <p className="errorMessage">{errors.password?.message}</p>}
         
             <button>Login</button>

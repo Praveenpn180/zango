@@ -1,6 +1,7 @@
 const express = require('express')
 const dotenv = require('dotenv')
 const authRoutes = require('./routes/auth.js')
+const postRoutes = require('./routes/postRoute.js')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const connectDB = require('./config/dbConfig')
@@ -20,6 +21,7 @@ app.use(cors({
 }))
 
 app.use("/api/auth", authRoutes)
+app.use("/api/posts", postRoutes)
 app.listen(4000, () => {
     console.log("server started successfully");
 })

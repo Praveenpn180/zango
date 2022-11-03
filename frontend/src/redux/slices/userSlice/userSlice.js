@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import authHelper from './Dispatcher/authHelper'
+import authHelper from './authHelper'
 // Get user from localStorage
 const user = JSON.parse(localStorage.getItem('user'))
 
@@ -12,7 +12,7 @@ const initialState = {
   message: ''
 }
 // Register user
-export const userRegister = createAsyncThunk('auth/register', async (user, thunkAPI) => {
+export const userRegister = createAsyncThunk('user/register', async (user, thunkAPI) => {
   try {
     return await authHelper.register(user)
   } catch (error) {
@@ -23,7 +23,7 @@ export const userRegister = createAsyncThunk('auth/register', async (user, thunk
 
 // Otp verification
 
-export const otp = createAsyncThunk('auth/otp', async (otpCode, thunkAPI) => {
+export const otp = createAsyncThunk('user/otp', async (otpCode, thunkAPI) => {
   try {
     const unRegUser = JSON.parse(localStorage.getItem('userData'))
     const { firstName, lastName , email, password, phone } = unRegUser
@@ -38,7 +38,7 @@ export const otp = createAsyncThunk('auth/otp', async (otpCode, thunkAPI) => {
 })
 
 // Login user
-export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
+export const login = createAsyncThunk('user/login', async (user, thunkAPI) => {
   try {
     return await authHelper.login(user)
   } catch (error) {
@@ -48,7 +48,7 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
 })
 
 // Logout user
-export const logout = createAsyncThunk('auth/logout', () => {
+export const logout = createAsyncThunk('user/logout', () => {
   authHelper.logout()
 })
 

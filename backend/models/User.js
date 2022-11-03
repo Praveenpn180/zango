@@ -28,7 +28,21 @@ const userSchema = new mongoose.Schema(
         type:Boolean,
         required:true,
         default:false
-    }
+    },
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
+    profilePicture: String,
+     coverPicture: String,
+     about: String,
+     livesIn: String,
+     worksAt: String,
+     relationship: String,
+     country: String,
+     followers: [],
+     following: [],
+   
 },
 {timestamps:true}
 )

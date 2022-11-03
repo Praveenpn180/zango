@@ -1,5 +1,4 @@
 import axios from 'axios'
-
 const API_URL_REGISTER = 'http://localhost:4000/api/auth/signup'
 const API_URL_LOGIN = 'http://localhost:4000/api/auth/login'
 const API_URL_OTP = 'http://localhost:4000/api/auth/otp'
@@ -41,6 +40,7 @@ const login = async (userData) => {
 // Logout user
 const logout = () => {
     localStorage.removeItem('user')
+    
 }
 
 const authHelper = {

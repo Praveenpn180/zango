@@ -10,14 +10,14 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-
-export default function Post() {
+import { Users } from "../../dummyData";
+export default function Post({ post }) {
   return (
     <Card sx={{ margin: 5 }}>
     <CardHeader
       avatar={
-        <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
-          R
+        <Avatar  alt="Remy Sharp" src={Users.filter((u) => u.id === post?.userId)[0].profilePicture}>
+          
         </Avatar>
       }
       action={
@@ -25,20 +25,18 @@ export default function Post() {
           <MoreVert />
         </IconButton>
       }
-      title="John Doe"
-      subheader="September 14, 2022"
+      title={Users.filter((u) => u.id === post?.userId)[0].username}
+      subheader={post.date}
     />
     <CardMedia
       component="img"
       height="20%"
-      image="https://images.pexels.com/photos/4534200/pexels-photo-4534200.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+      image={post.photo}
       alt="Paella dish"
     />
     <CardContent>
       <Typography variant="body2" color="text.secondary">
-        This impressive paella is a perfect party dish and a fun meal to cook
-        together with your guests. Add 1 cup of frozen peas along with the
-        mussels, if you like.
+      {post?.desc}
       </Typography>
     </CardContent>
     <CardActions disableSpacing>

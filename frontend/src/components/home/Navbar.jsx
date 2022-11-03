@@ -1,7 +1,8 @@
 import { Mail, Notifications, Pets } from "@mui/icons-material";
 import { useDispatch,useSelector } from 'react-redux'
-import { logout } from '../../redux/userSlice'
+import { logout } from '../../redux/slices/userSlice/userSlice'
 import { useNavigate } from 'react-router-dom'
+import { useEffect } from "react";
 import {
   AppBar,
   Avatar,
@@ -49,12 +50,15 @@ const UserBox = styled(Box)(({ theme }) => ({
     const [open, setOpen] = useState(false);
     const navigate=useNavigate()
 
-    const {user}=useSelector((state)=>state.user)
-
-    if(!user){
-      navigate('/login')
-    }
     const dispatch=useDispatch()
+    const {user}=useSelector((state)=>state.user)
+useEffect(()=>{
+ if(!user){
+    navigate('/login')
+    console.log('fgdfg');
+  }
+})
+
     return (
       <AppBar>
         <StyledToolbar>

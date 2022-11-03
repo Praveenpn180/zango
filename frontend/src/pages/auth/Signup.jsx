@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { userRegister, reset } from '../../redux/userSlice';
+import { userRegister, reset } from '../../redux/slices/userSlice/userSlice';
 import Spinner from '../../components/Spinner/Spinner'
 
 
@@ -88,12 +88,12 @@ export default function Signup() {
           {errors.phone && <p className="errorMessage">{errors.phone?.message}</p>}
 
 
-          <input type="text" placeholder='New password' name='password' {...register('password',
+          <input type="password" placeholder='New password' name='password' {...register('password',
             { required: 'Please enter password', minLength: { value: 8, message: 'Password must be 8 characters' } })} />
           {errors.password && <p className="errorMessage">{errors.password?.message}</p>}
 
 
-          <input type="text" placeholder='Confirm password' name='p2'{...register('p2', {
+          <input type="password" placeholder='Confirm password' name='p2'{...register('p2', {
             required: 'Please enter Confirm password', validate: (val) => {
               if (watch('password') !== val) {
                 return 'Passwords are not match'

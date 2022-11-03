@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { reset, otp } from '../../redux/userSlice'
+import { reset, otp } from '../../redux/slices/userSlice/userSlice'
 import { toast } from 'react-toastify'
 import Spinner from '../../components/Spinner/Spinner'
 
