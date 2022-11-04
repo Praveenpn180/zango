@@ -1,9 +1,10 @@
 const express = require('express')
 const router = require('express').Router()
-const { createPost, deletePost, getPost, getTimelinePosts, likePost, updatePost } = require ('../controllers/PostController.js')
+const { createPost, deletePost, getPost, getTimelinePosts, likePost, updatePost , uploadPost } = require ('../controllers/PostController.js')
 const {upload} = require('../helpers/multerHelper')
 
-router.post('/create',upload.single('file'),createPost)
+router.post('/create',createPost)
+router.post('/upload',upload.single('image'),uploadPost)
 router.get('/:id', getPost)
 router.put('/:id', updatePost)
 router.delete('/:id', deletePost)

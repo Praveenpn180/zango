@@ -11,8 +11,10 @@ import {
   Typography,
 
 } from "@mui/material";
-import { useSelector , useDispatch} from 'react-redux'
-import { createpostAction } from "../../redux/slices/postSlice/postSlice"
+import { useNavigate } from "react-router-dom";
+
+import { useSelector , useDispatch } from 'react-redux'
+import { createpostAction , uploadpostAction } from "../../redux/slices/postSlice/postSlice"
 import React, { useState, useRef } from "react";
 import {useForm} from 'react-hook-form'
 import {
@@ -38,11 +40,14 @@ const UserBox = styled(Box)({
   marginBottom: "20px",
 });
 export default function Add() {
+  const post = useSelector((state) => state?.post);
+  
+
 
   const { register, handleSubmit } = useForm()
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const { user } = useSelector((state) => state.user)
  
   const descr = useRef();
@@ -53,19 +58,35 @@ export default function Add() {
 
   const onSubmit = (data) => {
     
-    const post = {
+    
+    const newPost = {
       userId: user._id,
       description: data.description,
-      image:data.image[0]
-    };
+    }
+    if(data.image){
+      const postdata = new FormData();
+      const filename = Date.now() + data.image[0].name;
+      postdata.append("name" , filename)
+      postdata.append("image" ,data.image[0])
+      newPost.image = filename;
+   
+     
     
-    
-    dispatch(createpostAction(data));
+    try{
+      dispatch(uploadpostAction(postdata))
+      dispatch(createpostAction(newPost));
+      console.log('heloo');
+    }catch(err){
+      console.log(err);
+    }
 
+   
+
+  };
+    
+    
   }
- 
-
-
+  
 
   return (
     <>

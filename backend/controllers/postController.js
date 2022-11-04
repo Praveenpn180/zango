@@ -1,21 +1,36 @@
+const asyncHandler = require("express-async-handler")
 const PostModel = require("../models/postModel.js") 
 const mongoose = require("mongoose")
-
+const cloudinary = require('../utils/cloudinary')
 // creating a post
 
- const createPost = async (req, res) => {
-  if (!req.file) {
-    console.log("No file received");}
-  const newPost = new PostModel(req.body);
-    console.log(req.body.image[0]);
+ const createPost = asyncHandler(  async (req, res) => {
+ 
   try {
+   
+  const newPost =  new PostModel(req.body)
     await newPost.save();
     res.status(200).json(newPost);
+   
   } catch (error) {
     res.status(500).json(error);
   }
-};
+}
+)
 
+//upload post
+ const uploadPost = asyncHandler(  async (req, res) => {
+ 
+  try {
+    
+    return res.status(200).json("file upload successfully")
+   
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+)
+ 
 // get a post
 
  const getPost = async (req, res) => {
@@ -123,6 +138,7 @@ const mongoose = require("mongoose")
 
 module.exports={
     createPost,
+    uploadPost,
     getPost,
     updatePost,
     deletePost ,

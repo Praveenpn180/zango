@@ -1,21 +1,47 @@
-const path = require('path')
 const morgan = require('morgan')
 const express = require('express') 
 const app = express();
 const multer = require('multer');
-const upload = multer({dest: 'uploads/'});
+//const multerStorage = multer.memoryStorage()
+
+//
+
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, req.body.name);
+  },
+});
+
+//
+
 
 app.use(express.json());
 app.use(morgan('dev'));
 
 
-const storage = multer.diskStorage({
-  destination: function(req, file, callback) {
-    callback(null, '/src/my-images');
-  },
-  filename: function (req, file, callback) {
-    callback(null, file.fieldname);
+const multerFilter = (req, file, cb) => {
+  //check file type
+  if (file.mimetype.startsWith("image")) {
+    cb(null, true);
+  } else {
+    //rejected files
+    cb(
+      {
+        message: "Unsupported file format",
+      },
+      false
+    );
   }
-});
-
+};
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+  limits:{fileSize:1000000}
+})
 module.exports = {upload}
+
+
+

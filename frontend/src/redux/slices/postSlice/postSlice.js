@@ -27,20 +27,14 @@ export const  createpostAction = createAsyncThunk(
         try {
             //http call
 
-            console.log(post?.userId);
-            console.log(post?.description);
-            console.log(post?.image);
-            const formData = new FormData();
-            formData.append("userId", post?.userId);
-            formData.append("description", post?.description);
-            formData.append("image", post?.image);
-           
-           
+
             await axios.post(
                 `http://localhost:4000/api/posts/create`,
                 post,
                 config
-            );
+            ).then((res)=>{
+                console.log(res);
+            })
             //dispatch action
            // dispatch(resetPost());
             
@@ -50,6 +44,44 @@ export const  createpostAction = createAsyncThunk(
         }
     }
 );
+//upload post
+
+export const  uploadpostAction = createAsyncThunk(
+    "post/upload",
+    async (postdata, { rejectWithValue, getState, dispatch }) => {
+        
+        //get user token
+        const userData = getState()?.user;
+        
+       
+        const { user } = userData;
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user?.token}`,
+               
+            },
+        };
+        try {
+            //http call
+
+          console.log(postdata);
+            await axios.post(
+                `http://localhost:4000/api/posts/upload`,
+                postdata,
+                config
+            ).then((res)=>{
+                console.log(res);
+            })
+            //dispatch action
+           // dispatch(resetPost());
+            
+        } catch (error) {
+            if (!error?.response) throw error;
+            return rejectWithValue(error?.response?.data);
+        }
+    }
+);
+
 
 //Update Post action
 export const updatepostAction = createAsyncThunk(

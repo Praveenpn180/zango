@@ -6,9 +6,10 @@ import Sidebar from '../../components/Admin/Sidebar/Sidebar'
 export default function AdminDashboard() {
   return (
     <>
-   <Dashboard/>
+   
    <Navbar/>
    <Sidebar/>
+   <Dashboard/>
     </>
   )
 }
