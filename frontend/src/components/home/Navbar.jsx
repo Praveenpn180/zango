@@ -3,6 +3,7 @@ import { useDispatch,useSelector } from 'react-redux'
 import { logout } from '../../redux/slices/userSlice/userSlice'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from "react";
+import MenuIcon from '@mui/icons-material/Menu';
 import {
   AppBar,
   Avatar,
@@ -46,6 +47,16 @@ const UserBox = styled(Box)(({ theme }) => ({
     display: "none",
   },
 }));
+const MobileMenu = styled(MenuIcon)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  gap: "10px",
+  [theme.breakpoints.up("sm")]: {
+    display: "none",
+  },
+}));
+
+
   export default function Navbar() {
     const [open, setOpen] = useState(false);
     const navigate=useNavigate()
@@ -66,7 +77,11 @@ useEffect(()=>{
           <Typography variant="h6" sx={{ display: { xs: "none", sm: "block" } }}>
             Zango
           </Typography>
-          <Pets sx={{ display: { xs: "block", sm: "none" } }} />
+          <MenuIcon sx={{ display: { xs: "block", sm: "none" } }} >
+          <MenuItem>Profile</MenuItem>
+          <MenuItem>My account</MenuItem>
+          <MenuItem  onClick={()=>dispatch(logout())}>Logout</MenuItem>
+          </MenuIcon>
           <Search>
             <InputBase placeholder="search..." />
           </Search>

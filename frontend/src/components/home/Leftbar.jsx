@@ -24,7 +24,7 @@ export default function Leftbar({mode,setMode}) {
     <Box position="fixed" marginTop={8}>
       <List>
         <ListItem disablePadding>
-          <ListItemButton component="a" href="#home">
+          <ListItemButton component="a" href="/">
             <ListItemIcon>
               <Home />
             </ListItemIcon>
@@ -72,7 +72,7 @@ export default function Leftbar({mode,setMode}) {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton component="a" href="#simple-list">
+          <ListItemButton component="a" href="/profile">
             <ListItemIcon>
               <AccountBox />
             </ListItemIcon>

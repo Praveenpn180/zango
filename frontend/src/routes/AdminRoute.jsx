@@ -6,8 +6,8 @@ export default function AdminRoute() {
   return (
      <>
      <Routes>
-     <Route exact path='/adminlogin' element={<AdminLogin/>} />
-     <Route exact path='/admin' element={<AdminDashboard/>} />
+     <Route  path='/adminlogin' element={<AdminLogin/>} />
+     <Route  path='/admin' element={<AdminDashboard/>} />
      
     </Routes>
    </>

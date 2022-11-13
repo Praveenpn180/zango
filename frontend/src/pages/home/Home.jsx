@@ -21,7 +21,7 @@ export default function Home() {
         <Navbar />
         <Stack direction="row" spacing={2} justifyContent="space-between">
         <Leftbar setMode={setMode} mode={mode}/>
-          <Feed />
+          <Feed  />
           <Rightbar />
         </Stack>
         <Add />

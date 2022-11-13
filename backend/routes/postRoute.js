@@ -1,14 +1,15 @@
 const express = require('express')
 const router = require('express').Router()
-const { createPost, deletePost, getPost, getTimelinePosts, likePost, updatePost , uploadPost } = require ('../controllers/PostController.js')
+const { createPost, deletePost, getPost, getTimelinePosts, likePost, updatePost , uploadPost , getAllPost , addComment } = require ('../controllers/PostController.js')
 const {upload} = require('../helpers/multerHelper')
 
 router.post('/create',createPost)
 router.post('/upload',upload.single('image'),uploadPost)
-router.get('/:id', getPost)
 router.put('/:id', updatePost)
+router.get('/all', getAllPost)
+router.get('/:id', getPost)
 router.delete('/:id', deletePost)
-router.put('/:id/like', likePost)
+router.put('/like/:id/:userId', likePost)
 router.get('/:id/timeline', getTimelinePosts)
-
+router.post('/comment',addComment)
 module.exports = router; 

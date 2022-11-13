@@ -11,10 +11,9 @@ import {
   Typography,
 
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 
 import { useSelector , useDispatch } from 'react-redux'
-import { createpostAction , uploadpostAction } from "../../redux/slices/postSlice/postSlice"
+import {  uploadpostAction , fetchPostsAction} from "../../redux/slices/postSlice/postSlice"
 import React, { useState, useRef } from "react";
 import {useForm} from 'react-hook-form'
 import {
@@ -40,51 +39,66 @@ const UserBox = styled(Box)({
   marginBottom: "20px",
 });
 export default function Add() {
-  const post = useSelector((state) => state?.post);
+
+
+  const preview = {
+    flex: 1,
+    display: "flex",
+    justifyContent: "flex-end",
+    position:"fixed",
+    marginLeft:"300px",
+    marginTop:"-70px"
+    
+  }
+  const imag =  {
+    width: "100px",
+    height: "100px",
+    objectFit: "cover",
+    borderRadius:" 0px"
+  }
   
 
-
+  const [file, setFile] = useState(null);
   const { register, handleSubmit } = useForm()
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { user } = useSelector((state) => state.user)
  
   const descr = useRef();
 
-  const [file, setFile] = useState(null);
 
-
+  
 
   const onSubmit = (data) => {
+    console.log(data);
+    const postdata = new FormData();
     
-    
-    const newPost = {
-      userId: user._id,
-      description: data.description,
-    }
-    if(data.image){
-      const postdata = new FormData();
-      const filename = Date.now() + data.image[0].name;
+    if(data.image[0]){
+     
+      const filename =data.image[0].name;
       postdata.append("name" , filename)
       postdata.append("image" ,data.image[0])
-      newPost.image = filename;
-   
+    }
+      postdata.append("userId", user._id)
+      postdata.append("description", data.description)
      
-    
+   
     try{
       dispatch(uploadpostAction(postdata))
-      dispatch(createpostAction(newPost));
-      console.log('heloo');
+      setTimeout(() => {
+        dispatch(fetchPostsAction())
+      }, 2000);
+     
     }catch(err){
       console.log(err);
     }
-
+    
    
 
-  };
+  
     
-    
+  //dispatch(createpostAction(newPost));
+  setOpen(false)
   }
   
 
@@ -143,6 +157,12 @@ export default function Add() {
             name='description'
             {...register("description")}
           />
+          <div style={preview}>
+          {file && (
+              <img style={imag} alt="" src={URL.createObjectURL(file)} />
+            )}
+          </div>
+           
           <Stack direction="row" gap={1} mt={2} mb={3}>
             <EmojiEmotions color="primary" />
             <Image color="secondary" onClick={() => { document.getElementById('file').click() }} />
@@ -165,13 +185,14 @@ export default function Add() {
       </SytledModal>
 
         <input
+        onChange={(e) => setFile(e.target.files[0])}
           style={{ display: "none" }}
           type="file"
           id="file"
           accept=".png,.jpeg,.jpg"
-          onChange={(e) => setFile(e.target.files[0])} {...register("image")} />
+          {...register("image")}  />
         
-        <button id="postsubmit" type="submit">
+        <button id="postsubmit" type="submit"style={{ display: "none" }}>
 
         </button>
       </form>

@@ -1,17 +1,17 @@
 const asyncHandler = require("express-async-handler")
-const PostModel = require("../models/postModel.js") 
+const PostModel = require("../models/postModel.js")
+const User = require("../models/User")
 const mongoose = require("mongoose")
-const cloudinary = require('../utils/cloudinary')
+const cloudinaryUploadImg = require('../utils/cloudinary')
 // creating a post
 
- const createPost = asyncHandler(  async (req, res) => {
- 
+const createPost = asyncHandler(async (req, res) => {
+
   try {
-   
-  const newPost =  new PostModel(req.body)
+    const newPost = new PostModel(req.body)
     await newPost.save();
     res.status(200).json(newPost);
-   
+
   } catch (error) {
     res.status(500).json(error);
   }
@@ -19,21 +19,61 @@ const cloudinary = require('../utils/cloudinary')
 )
 
 //upload post
- const uploadPost = asyncHandler(  async (req, res) => {
- 
+const uploadPost = asyncHandler(async (req, res) => {
+
   try {
-    
-    return res.status(200).json("file upload successfully")
-   
+
+
+    //   const imageResult = await cloudinary.uploader.upload(req.body.name, {
+    //     folder: 'public/images',
+    // })
+    if (req.file) {
+      const localPath = `public/images/${req.file.filename}`;
+      const imgUploaded = await cloudinaryUploadImg(localPath);
+      console.log(imgUploaded.url);
+      await PostModel.create({
+        ...req.body,
+
+        image: imgUploaded?.url,
+      });
+
+      res.status(200).json("file upload successfully");
+
+    } else {
+      await PostModel.create({
+        ...req.body,
+
+      });
+      res.status(200).json("post upload successfully");
+    }
+
+
+    // return res.status(200).json("file upload successfully")
+
   } catch (error) {
     res.status(500).json(error);
   }
 }
 )
- 
+
+//get all  post
+const getAllPost = async (req, res) => {
+  try {
+    let posts = await PostModel.find()
+      .populate("userId")
+      .sort({ createdAt: -1 })
+
+
+    res.status(200).json(posts)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+
+}
+
 // get a post
 
- const getPost = async (req, res) => {
+const getPost = async (req, res) => {
   const id = req.params.id;
 
   try {
@@ -45,7 +85,7 @@ const cloudinary = require('../utils/cloudinary')
 };
 
 // update post
- const updatePost = async (req, res) => {
+const updatePost = async (req, res) => {
   const postId = req.params.id;
   const { userId } = req.body;
 
@@ -57,11 +97,11 @@ const cloudinary = require('../utils/cloudinary')
     } else {
       res.status(403).json("Authentication failed");
     }
-  } catch (error) {}
+  } catch (error) { }
 };
 
 // delete a post
- const deletePost = async (req, res) => {
+const deletePost = async (req, res) => {
   const id = req.params.id;
   const { userId } = req.body;
 
@@ -79,9 +119,10 @@ const cloudinary = require('../utils/cloudinary')
 };
 
 // like/dislike a post
- const likePost = async (req, res) => {
+const likePost = async (req, res) => {
+
   const id = req.params.id;
-  const { userId } = req.body;
+  const userId = req.params.userId;
   try {
     const post = await PostModel.findById(id);
     if (post.likes.includes(userId)) {
@@ -96,14 +137,41 @@ const cloudinary = require('../utils/cloudinary')
   }
 };
 
+
+// Add comment
+
+const addComment = asyncHandler(async (req, res) => {
+try{
+  console.log(req.body);
+ return res.status(200).json("Post liked");
+}catch(err){
+  console.log(err);
+}
+
+  
+  // try {
+  //   const post = await PostModel.findById(id);
+  //   if (post.likes.includes(userId)) {
+  //     await post.updateOne({ $pull: { likes: userId } });
+  //     res.status(200).json("Post disliked");
+  //   } else {
+  //     await post.updateOne({ $push: { likes: userId } });
+  //     res.status(200).json("Post liked");
+  //   }
+  // } catch (error) {
+  //   res.status(500).json(error);
+  // }
+}
+)
+
 // Get timeline posts
- const getTimelinePosts = async (req, res) => {
+const getTimelinePosts = async (req, res) => {
   const userId = req.params.id
   try {
     const currentUserPosts = await PostModel.find({ userId: userId });
 
     const followingPosts = await UserModel.aggregate([
-      { 
+      {
         $match: {
           _id: new mongoose.Types.ObjectId(userId),
         },
@@ -136,12 +204,14 @@ const cloudinary = require('../utils/cloudinary')
   }
 };
 
-module.exports={
-    createPost,
-    uploadPost,
-    getPost,
-    updatePost,
-    deletePost ,
-    likePost,
-    getTimelinePosts
+module.exports = {
+  createPost,
+  uploadPost,
+  getPost,
+  getAllPost,
+  updatePost,
+  deletePost,
+  likePost,
+  getTimelinePosts,
+  addComment
 }
