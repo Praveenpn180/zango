@@ -31,8 +31,8 @@ export default function Feed() {
           <Skeleton variant="rectangular" height={300} />
         </Stack>
       ) : (
-        postLists?.map((p) => (
-          <Post key={p._id} post={p} />
+        postLists?.map((p,index) => (
+          <Post key={index} post={p} />
         ))
       )
       }

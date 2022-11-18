@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler")
 const PostModel = require("../models/postModel.js")
-const User = require("../models/User")
+const CommentModel = require("../models/commentModel.js")
 const mongoose = require("mongoose")
 const cloudinaryUploadImg = require('../utils/cloudinary')
 // creating a post
@@ -61,10 +61,31 @@ const getAllPost = async (req, res) => {
   try {
     let posts = await PostModel.find()
       .populate("userId")
+      .populate("comments")
+
       .sort({ createdAt: -1 })
 
 
     res.status(200).json(posts)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+
+}
+//get Comment
+const getComment = async (req, res) => {
+  try {
+    console.log(req.params.id);
+    let comment = await CommentModel.find({"postId":req.params.id})
+                .populate("userId")
+                .sort({ createdAt: -1 })
+               if (!comment[0]) {
+                comment.push({"postId":req.params.id})
+                res.status(200).json(comment)
+               }else{
+                res.status(200).json(comment)
+               }
+    
   } catch (error) {
     res.status(500).json(error)
   }
@@ -140,29 +161,19 @@ const likePost = async (req, res) => {
 
 // Add comment
 
-const addComment = asyncHandler(async (req, res) => {
+const addComment = async (req, res) => {
 try{
   console.log(req.body);
- return res.status(200).json("Post liked");
+ // const post = await PostModel.findByIdAndUpdate(req.body.postId,{ $push: { comments:{"userId":req.body.userId,"comment":req.body.comment,"Date":new Date()} } });
+const comment = await CommentModel.create({...req.body})
+console.log(comment);
+ return res.status(200).json("Post Commented");
 }catch(err){
   console.log(err);
 }
 
-  
-  // try {
-  //   const post = await PostModel.findById(id);
-  //   if (post.likes.includes(userId)) {
-  //     await post.updateOne({ $pull: { likes: userId } });
-  //     res.status(200).json("Post disliked");
-  //   } else {
-  //     await post.updateOne({ $push: { likes: userId } });
-  //     res.status(200).json("Post liked");
-  //   }
-  // } catch (error) {
-  //   res.status(500).json(error);
-  // }
 }
-)
+
 
 // Get timeline posts
 const getTimelinePosts = async (req, res) => {
@@ -213,5 +224,6 @@ module.exports = {
   deletePost,
   likePost,
   getTimelinePosts,
-  addComment
+  addComment,
+  getComment
 }

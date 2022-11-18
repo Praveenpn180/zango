@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { reset, otp } from '../../redux/slices/userSlice/userSlice'
 import { toast } from 'react-toastify'
-import Spinner from '../../components/Spinner/Spinner'
 
 export default function OtpVerification() {
 
@@ -34,7 +33,7 @@ export default function OtpVerification() {
   }
 
   if (isLoading) {
-    return (<><Spinner /></>)
+console.log('loading');
   }
   return (
     <div className="formContainer">

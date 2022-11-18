@@ -2,7 +2,11 @@ import { Avatar } from "@mui/material";
 import {useRef} from 'react'
 import { commentPost } from "../../../Api/PostApi";
 import {useSelector} from 'react-redux'
-function   Comments({ postId }) {
+import DateFormatter from '../../../utils/DateFormater'
+
+function   Comments({ post }) {
+
+    console.log(post);
 const write = {display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
@@ -47,17 +51,15 @@ const commentDate= {
   const { user } = useSelector((state) => state.user)
   const newComment = useRef()
 const submitComment = (comment) =>{
-    const dataa = new FormData();
-    dataa.append("comment",comment.current.value)
-    dataa.append("userId",user._id)
-    dataa.append("postId",postId)
+   
     try{
-        console.log(comment.current.value);
-        console.log(user._id);
-        console.log(postId); 
        
-        commentPost(dataa)
-
+        let commentData= {}
+        commentData.comment = comment.current.value
+        commentData.userId = user._id
+       commentData.postId = post[0]?.postId
+        commentPost(commentData)
+        
       }catch(err){
         console.log(err);
       }
@@ -78,21 +80,22 @@ const submitComment = (comment) =>{
                     placeholder="write a comment" />
                 <button style={sendButton} onClick={()=>{submitComment(newComment)}}>Send</button>
             </div>
-
-            <div style={comments}>
+            {post[0]._id? (post?.map((c,index)=>(
+            <div style={comments} key={index}>
                 <img alt="" />
                 <Avatar alt="Zango" >
 
           </Avatar>
                 <div style={spans}>
-                    <span style={{ fontWeight: "500"}}>Praveen</span>
-                    <p>comment</p>
+                    <span style={{ fontWeight: "500"}}>{c.userId?.firstName +" "+c.userId?.lastName}</span>
+                    <p>{c.comment}</p>
                 </div>
                 <span style={commentDate}>
-                    12/06/1995
+              
+                <time><DateFormatter date={c?.createdAt} /></time>
                 </span>
             </div>
-
+                ))):(<div></div>)}
         </div>
     );
 }

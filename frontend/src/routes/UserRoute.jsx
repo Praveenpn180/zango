@@ -17,19 +17,12 @@ export default function UserRoute() {
                 <Route path='/login' element={<Login />} />
                 <Route path='/otp' element={<Otp />} />
                 <Route path='/signup' element={<Signup />} />
-
-
                 <Route element={<UserProtectedRoute />}>
                     <Route exact path='/' element={<Home />} />
                     <Route path='/chat' element={<Chat />} />
 
                     <Route path='/profile' element={<Profile />} />
                 </Route>
-
-               
-
-
-
             </Routes>
         </>
     )

@@ -5,7 +5,9 @@ const API_URL_OTP = 'http://localhost:4000/api/auth/otp'
 
 // Register user
 const register = async (userData) => {
-    const response = await axios.post(API_URL_REGISTER, userData)
+    const response = await axios.post(API_URL_REGISTER, userData).then((res)=>{
+       console.log(res);
+    })
 
     if (response.data) {
         localStorage.setItem('userData', JSON.stringify(userData))

@@ -13,10 +13,11 @@ API.interceptors.request.use((req) => {
   });
 
 
-export const likePost=(postId, userId)=>API.put(`api/posts/like/${postId}/${userId}`)
+export const likePost=(postId, userId)=>API.put(`/api/posts/like/${postId}/${userId}`)
 export const commentPost=(data)=>{
-  for (const [key, value] of data.entries()) { 
-    console.log(key, value);
-   }
-  API.post(`api/posts/comment`,data)
+  // for (const [key, value] of data.entries()) { 
+  //   console.log(key, value);
+  //  }
+  API.post(`/api/posts/comment`,data)
 }
+export const getComments=(postId)=>API.get(`/api/posts/getcomment/${postId}`)

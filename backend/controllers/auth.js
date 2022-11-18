@@ -6,6 +6,7 @@ const { doSms, verifyOtp } = require('../helpers/twilioHelper')
 
 const signup = asyncHandler(async (req, res) => {
     const { firstName, lastName, email, phone, password } = req.body
+    console.log(req.body);
     try {
         if (!firstName || !lastName || !email || !phone || !password) {
             return res.status(400).json({ message: "Please add all fields" });
@@ -15,7 +16,8 @@ const signup = asyncHandler(async (req, res) => {
         // Check if user exists
 
         if (userExists) {
-            return res.status(400).json({ message: "User already exists" });
+            console.log(userExists);
+            return res.status(401).json({ message: "User already exists" });
 
 
         }

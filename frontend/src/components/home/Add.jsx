@@ -190,6 +190,7 @@ export default function Add() {
           type="file"
           id="file"
           accept=".png,.jpeg,.jpg"
+        
           {...register("image")}  />
         
         <button id="postsubmit" type="submit"style={{ display: "none" }}>

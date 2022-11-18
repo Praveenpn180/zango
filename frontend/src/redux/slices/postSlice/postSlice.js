@@ -67,7 +67,7 @@ export const fetchPostsAction = createAsyncThunk(
                 `http://localhost:4000/api/posts/all`,
              config
             )
-        
+              console.log(data);
                 return data;
             
            

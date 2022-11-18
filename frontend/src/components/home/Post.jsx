@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 
 import {  useSelector} from "react-redux";
-import { likePost } from "../../Api/PostApi"
+import { getComments, likePost } from "../../Api/PostApi"
 
 
 export default function Post({ post }) {
@@ -24,6 +24,7 @@ export default function Post({ post }) {
 const { user } = useSelector((state) => state.user)
 const [liked, setLiked] = useState(post.likes.includes(user._id))
 const [likes, setLikes] = useState(post.likes.length)
+const [comment, setComment] = useState()
 
 
 const handleLike = () => {
@@ -31,6 +32,18 @@ const handleLike = () => {
   setLiked((prev) => !prev);
   liked? setLikes((prev)=>prev-1): setLikes((prev)=>prev+1)
 };
+const handleComment = async() => {
+
+if(!commentOpen){
+  const comments = await getComments(post?._id)
+  
+  setComment(comments.data)
+
+}
+
+  setCommentOpen(!commentOpen)
+
+}
 
   return (
     <Card sx={{ margin: 5 }}>
@@ -76,7 +89,7 @@ const handleLike = () => {
           <span style={{fontSize: 12}}> {likes} likes</span>
          
         </IconButton>
-        <IconButton aria-label="comment" onClick={() => setCommentOpen(!commentOpen)}>
+        <IconButton aria-label="comment" onClick={ handleComment }>
           <Comment />
         </IconButton>
        
@@ -84,7 +97,7 @@ const handleLike = () => {
           <Share />
         </IconButton>
       </CardActions>
-      {commentOpen && <Comments postId={post._id} />}
+      {commentOpen && <Comments post={comment} />}
     </Card>
   )
 }

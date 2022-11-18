@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { login , reset } from '../../redux/slices/userSlice/userSlice'
-import Spinner from '../../components/Spinner/Spinner'
 import './auth.scss'
  function Login() {
 
@@ -32,7 +31,7 @@ import './auth.scss'
   }
 
   if (isLoading) {
-    return (<><Spinner /></>)
+   console.log('loading');
   }
 
 
