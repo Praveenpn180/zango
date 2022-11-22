@@ -159,7 +159,7 @@ export default function Add() {
           />
           <div style={preview}>
           {file && (
-              <img style={imag} alt="" src={URL.createObjectURL(file)} />
+              <img style={imag} alt="" src={URL.createObjectURL({file})} />
             )}
           </div>
            
@@ -186,7 +186,7 @@ export default function Add() {
 
         <input
         onChange={(e) => setFile(e.target.files[0])}
-          style={{ display: "none" }}
+        style={{ display: "none" }}
           type="file"
           id="file"
           accept=".png,.jpeg,.jpg"

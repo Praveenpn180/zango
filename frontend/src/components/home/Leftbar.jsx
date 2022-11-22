@@ -39,21 +39,9 @@ export default function Leftbar({mode,setMode}) {
             <ListItemText primary="Chat" />
           </ListItemButton >
         </ListItem>
+      
         <ListItem disablePadding>
-          <ListItemButton component="a" href="#simple-list">
-            <ListItemIcon>
-              <Group />
-            </ListItemIcon>
-            <ListItemText primary="Groups" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton component="a" href="#simple-list">
-            <ListItemIcon>
-              <Storefront />
-            </ListItemIcon>
-            <ListItemText primary="Marketplace" />
-          </ListItemButton>
+       
         </ListItem>
         <ListItem disablePadding>
           <ListItemButton component="a" href="#simple-list">
@@ -63,14 +51,7 @@ export default function Leftbar({mode,setMode}) {
             <ListItemText primary="Friends" />
           </ListItemButton>
         </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton component="a" href="#simple-list">
-            <ListItemIcon>
-              <Settings />
-            </ListItemIcon>
-            <ListItemText primary="Settings" />
-          </ListItemButton>
-        </ListItem>
+       
         <ListItem disablePadding>
           <ListItemButton component="a" href="/profile">
             <ListItemIcon>

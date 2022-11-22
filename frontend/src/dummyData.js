@@ -18,37 +18,7 @@ export const Users = [
     _id:"4",
     profilePicture: "assets/person/4.jpeg",
     username: "Dora Hawks",
-  },
-  {
-    _id:"5",
-    profilePicture: "assets/person/5.jpeg",
-    username: "Thomas Holden",
-  },
-  {
-    _id:"6",
-    profilePicture: "assets/person/6.jpeg",
-    username: "Shirley Beauchamp",
-  },
-  {
-    _id:"7",
-    profilePicture: "assets/person/7.jpeg",
-    username: "Travis Bennett",
-  },
-  {
-    _id:"635cbc1b4874eb940f5e803d",
-    profilePicture: "assets/person/8.jpeg",
-    username: "Kristen Thomas",
-  },
-  {
-    _id:"9",
-    profilePicture: "assets/person/9.jpeg",
-    username: "Gary Duty",
-  },
-  {
-    _id:"10",
-    profilePicture: "assets/person/10.jpeg",
-    username: "Safak Kocaoglu",
-  },
+  }
 ];
 
 export const Posts = [

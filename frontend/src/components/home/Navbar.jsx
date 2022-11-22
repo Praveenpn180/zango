@@ -1,4 +1,3 @@
-import { Mail, Notifications, Pets } from "@mui/icons-material";
 import { useDispatch,useSelector } from 'react-redux'
 import { logout } from '../../redux/slices/userSlice/userSlice'
 import { useNavigate } from 'react-router-dom'
@@ -7,7 +6,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import {
   AppBar,
   Avatar,
-  Badge,
   Box,
   InputBase,
   Menu,
@@ -74,7 +72,7 @@ useEffect(()=>{
       <AppBar>
         <StyledToolbar>
 
-          <Typography variant="h6" sx={{ display: { xs: "none", sm: "block" } }}>
+          <Typography variant="h6" sx={{ display: { xs: "none", sm: "block" } }} onClick={()=> navigate('/')}>
             Zango
           </Typography>
           <MenuIcon sx={{ display: { xs: "block", sm: "none" } }} >
@@ -85,25 +83,23 @@ useEffect(()=>{
           <Search>
             <InputBase placeholder="search..." />
           </Search>
-          <Icons>
-            <Badge badgeContent={4} color="error">
-              <Mail />
-            </Badge>
-            <Badge badgeContent={2} color="error">
-              <Notifications />
-            </Badge>
+          <Icons
+           onClick={(e) => setOpen(true)}>
+            
             <Avatar
               sx={{ width: 30, height: 30 }}
               src="https://images.pexels.com/photos/846741/pexels-photo-846741.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-              onClick={(e) => setOpen(true)}
+             
             />
+             <Typography variant="span">{user.firstName}</Typography>
           </Icons>
-          <UserBox onClick={(e) => setOpen(true)}>
+          <UserBox onClick={(e) => setOpen(true)} sx={{ display: "flex",
+  justifyContent: "space-between",}}>
             <Avatar
               sx={{ width: 30, height: 30 }}
               src="https://images.pexels.com/photos/846741/pexels-photo-846741.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
             />
-            <Typography variant="span">John</Typography>
+            <Typography variant="span">{user.firstName}</Typography>
           </UserBox>
         </StyledToolbar>
         <Menu
@@ -120,8 +116,7 @@ useEffect(()=>{
             horizontal: "right",
           }}
         >
-          <MenuItem>Profile</MenuItem>
-          <MenuItem>My account</MenuItem>
+          
           <MenuItem  onClick={()=>dispatch(logout())}>Logout</MenuItem>
         </Menu>
       </AppBar>

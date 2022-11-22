@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import Home from '../pages/home/Home'
 import Login from '../pages/auth/Login'
 import Signup from '../pages/auth/Signup'
-import Chat from '../pages/chat/Chat'
+import Messenger from '../pages/messenger/Messenger'
 import Otp from '../pages/auth/OtpVerification'
 import UserProtectedRoute from './ProtectedRoute/UserProtectedRoute'
 import Profile from '../components/home/Profile/Profile'
@@ -19,7 +19,7 @@ export default function UserRoute() {
                 <Route path='/signup' element={<Signup />} />
                 <Route element={<UserProtectedRoute />}>
                     <Route exact path='/' element={<Home />} />
-                    <Route path='/chat' element={<Chat />} />
+                    <Route path='/chat' element={<Messenger />} />
 
                     <Route path='/profile' element={<Profile />} />
                 </Route>
